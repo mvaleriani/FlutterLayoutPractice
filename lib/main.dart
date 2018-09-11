@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 void main() {
+
   debugPaintSizeEnabled=false;
  runApp(new MyApp());
+}
+
+final ThemeData _appraiseTheme = _buildAppraiseTheme();
+
+ThemeData _buildAppraiseTheme(){
+  final ThemeData base = ThemeData.light();
+  return base.copyWith(
+    accentColor: Color(0xFFd2b185),
+    primaryColor: Color(0xFF036564),
+    primaryColorDark: Color(0xFF003a3a),
+    buttonColor: Color(0xFF036564),
+    scaffoldBackgroundColor: Color(0xFFFFFFFF),
+    cardColor: Color(0xFFFFFFFF),
+    textSelectionColor: Color(0xFF036564),
+    errorColor: Color(0xFFC5032B)
+  );
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
+
   Widget build(BuildContext context) {
 
     Widget titleSection = Container(
@@ -79,15 +97,16 @@ class MyApp extends StatelessWidget {
         softWrap: true,
       ),
     );
-
+//    FlutterStatusbarcolor.setStatusBarColor(_appraiseTheme.primaryColorDark);
     return MaterialApp(
       title: 'Layout Practice',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: _appraiseTheme,
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Best in The Bay'),
+//          backgroundColor: Color(0xFF003b3a),
+
         ),
         body: ListView(
           children: [
@@ -101,6 +120,16 @@ class MyApp extends StatelessWidget {
             buttonSection,
             textSection,
           ],
+        ),
+      bottomNavigationBar: BottomNavigationBar(
+//          currentIndex: index,
+          fixedColor: _appraiseTheme.accentColor,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.message), title: Text("Messages"), backgroundColor: _appraiseTheme.accentColor),
+            BottomNavigationBarItem(icon: Icon(Icons.android), title: Text("DBT"), ),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), title: Text("Settings"), ),
+          ],
+          type: BottomNavigationBarType.shifting,
         ),
       ),
     );
@@ -143,7 +172,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget>{
         SizedBox(
           width: 18.0,
           child: Container(
-            child: Text('$_favoriteCount', style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),),
+            child: Text('$_favoriteCount', style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600)),
           ),
         ),
       ],
@@ -152,13 +181,15 @@ class _FavoriteWidgetState extends State<FavoriteWidget>{
   
 }
 
+
+
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
-
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
